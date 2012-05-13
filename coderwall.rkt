@@ -77,3 +77,12 @@
                            (user-name user)
                            (map (lambda (badge) (badge-name badge)) badges))))
   user-names-to-badges-hash)
+
+(define (user-badge-names user)
+  (map (lambda (badge) (badge-name badge)) (user-badges user)))
+
+(define (badges-to-descriptions user)
+  (define badge-hash (make-hash))
+  (for ([badge (user-badges user)])
+    (hash-set! badge-hash (badge-name badge) (badge-description badge)))
+  badge-hash)
