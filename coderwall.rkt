@@ -18,6 +18,8 @@
 (struct team (id score name rank neighbors team-members))
 (struct neighbor (id score name rank))
 (struct team-member (name username badges_count endorsements_count))
+(struct user (location name team username endorsements accounts badges))
+(struct badge (name description created image-url))
 
 (define (make-neighbor neighbor-hash)
   (neighbor (hash-ref neighbor-hash 'id)
@@ -39,3 +41,19 @@
         (hash-ref team-json 'rank)
         (map make-neighbor (hash-ref team-json 'neighbors))
         (map make-team-member (hash-ref team-json 'team_members))))
+
+(define (make-badge badge-hash)
+  (badge (hash-ref badge-hash 'name)
+         (hash-ref badge-hash 'description)
+         (hash-ref badge-hash 'created)
+         (hash-ref badge-hash 'badge)))
+
+(define (make-user username)
+  (define user-json (get-user-json username))
+  (user (hash-ref user-json 'location)
+        (hash-ref user-json 'name)
+        (hash-ref user-json 'team)
+        (hash-ref user-json 'username)
+        (hash-ref user-json 'endorsements)
+        (hash-ref user-json 'accounts)
+        (map make-badge (hash-ref user-json 'badges))))
