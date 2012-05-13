@@ -57,3 +57,23 @@
         (hash-ref user-json 'endorsements)
         (hash-ref user-json 'accounts)
         (map make-badge (hash-ref user-json 'badges))))
+
+(define (make-badges-hash team)
+  (define team-usernames
+    (map (lambda (team-member) (team-member-username team-member))
+         (team-team-members team)))
+  (define team-users
+    (map make-user team-usernames))
+  (define users-to-badges-hash (make-hash))
+  (for ([user team-users])
+    (hash-set! users-to-badges-hash user (user-badges user)))
+  users-to-badges-hash)
+
+(define (user-names-to-badges team)
+  (define user-names-to-badges-hash (make-hash))
+  (hash-for-each (make-badges-hash team)
+                (lambda (user badges)
+                (hash-set! user-names-to-badges-hash
+                           (user-name user)
+                           (map (lambda (badge) (badge-name badge)) badges))))
+  user-names-to-badges-hash)
