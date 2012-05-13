@@ -2,11 +2,20 @@
 (require net/url
          (planet dherman/json:4:0))
 
+(define (get-json make-url-function team-id-or-username)
+  (read-json (get-pure-port (make-url-function team-id-or-username))))
+
 (define (make-team-url team-id)
   (string->url (string-append "http://coderwall.com/teams/" team-id ".json")))
 
 (define (get-team-json team-id)
-  (read-json (get-pure-port (make-team-url team-id))))
+  (get-json make-team-url team-id))
+
+(define (make-user-url username)
+  (string->url (string-append "http://coderwall.com/" username ".json")))
+
+(define (get-user-json username)
+  (get-json make-user-url username))
 
 (struct team (id score name rank neighbors team-members))
 (struct neighbor (id score name rank))
