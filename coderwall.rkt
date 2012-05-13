@@ -88,9 +88,25 @@
                               (map (lambda (badge) (badge-name badge)) badges))))
   user-names-to-badges-hash)
 
+; return a list of badge names that a user has
+; example:
+; (define shawn (make-user "shawnps"))
+; (user-badge-names shawn)
+; '("Python 3" "Python" "Castor" "Charity")
 (define (user-badge-names user)
   (map (lambda (badge) (badge-name badge)) (user-badges user)))
 
+; return a hash of badge names to badge descriptions for a user
+; example:
+; (define shawn (make-user "shawnps"))
+; (badges-to-descriptions shawn)
+; '#hash(("Charity" . "Fork and commit to someone's open source project
+;         in need")
+;        ("Castor" . "Made something awesome")
+;        ("Python 3" . "Have at least three original repos where Python
+;         is the dominant language")
+;        ("Python" . "Would you expect anything less? Have at least one
+;         original repo where Python is the dominant language"))
 (define (badges-to-descriptions user)
   (define badge-hash (make-hash))
   (for ([badge (user-badges user)])
