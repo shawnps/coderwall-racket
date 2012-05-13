@@ -1,13 +1,13 @@
-coderwall_racket
+coderwall-racket
 ================
 
 A racket client for the Coderwall API
 
-Example of how to get a hash of team members' names to badges:
+Example of how to get a hash of team members' names to badges (shortened for space):
 ```Racket
-(define rackspace (make-team "4f271941973bf0000400037b"))
-(define rackspace-users-to-badges (user-names-to-badges rackspace))
-rackspace-users-to-badges
+> (define rackspace (make-team "4f271941973bf0000400037b"))
+> (user-names-to-badges rackspace)
+'#hash(("Shawn Smith" . ("Python 3" "Python" "Castor" "Charity")))
 ```
 
 Get list of badge names for a user:
