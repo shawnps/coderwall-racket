@@ -5,16 +5,14 @@
 (define (get-json make-url-function team-id-or-username)
   (read-json (get-pure-port (make-url-function team-id-or-username))))
 
-(define (make-team-url team-id)
-  (string->url (string-append "http://coderwall.com/teams/" team-id ".json")))
-
 (define (get-team-json team-id)
+  (define (make-team-url team-id)
+    (string->url (string-append "http://coderwall.com/teams/" team-id ".json")))
   (get-json make-team-url team-id))
 
-(define (make-user-url username)
-  (string->url (string-append "http://coderwall.com/" username ".json")))
-
 (define (get-user-json username)
+  (define (make-user-url username)
+    (string->url (string-append "http://coderwall.com/" username ".json")))
   (get-json make-user-url username))
 
 (struct team (id score name rank neighbors team-members))
