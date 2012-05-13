@@ -58,6 +58,11 @@
         (hash-ref user-json 'accounts)
         (map make-badge (hash-ref user-json 'badges))))
 
+; make a hash of user structs to list of badge structs for a team.
+; example (shortened to one user for space):
+; (define rackspace (make-team "4f271941973bf0000400037b"))
+; (make-badges-hash rackspace)
+; '#hash((#<user> . (#<badge> #<badge> #<badge> #<badge>)))
 (define (make-badges-hash team)
   (define team-usernames
     (map (lambda (team-member) (team-member-username team-member))
@@ -69,13 +74,18 @@
     (hash-set! users-to-badges-hash user (user-badges user)))
   users-to-badges-hash)
 
+; make a hash of users names to badge names for a team.
+; example (shortened to one user for space):
+; (define rackspace (make-team "4f271941973bf0000400037b"))
+; (user-names-to-badges rackspace)
+; '#hash(("Shawn Smith" . ("Python 3" "Python" "Castor" "Charity")))
 (define (user-names-to-badges team)
   (define user-names-to-badges-hash (make-hash))
   (hash-for-each (make-badges-hash team)
-                (lambda (user badges)
-                (hash-set! user-names-to-badges-hash
-                           (user-name user)
-                           (map (lambda (badge) (badge-name badge)) badges))))
+                 (lambda (user badges)
+                   (hash-set! user-names-to-badges-hash
+                              (user-name user)
+                              (map (lambda (badge) (badge-name badge)) badges))))
   user-names-to-badges-hash)
 
 (define (user-badge-names user)
